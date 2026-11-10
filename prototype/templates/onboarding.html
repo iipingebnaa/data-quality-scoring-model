@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Onboarding | BankSecure</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-icon">B</div>
+        <div>
+            <h2>BankSecure</h2>
+            <span>Customer Onboarding Portal</span>
+        </div>
+    </div>
+    <span class="secure-label">Secure Onboarding</span>
+</header>
+
+<main class="page-container">
+
+    <section class="intro">
+        <span class="eyebrow">CUSTOMER REGISTRATION</span>
+        <h1>Let's get you started</h1>
+        <p>Please provide your details below to complete the customer onboarding process.</p>
+    </section>
+
+    <section class="form-card">
+
+        <div class="form-heading">
+            <div>
+                <h2>Personal Information</h2>
+                <p>Please provide the requested information. Missing information may affect your data quality score.</p>
+            </div>
+            <span class="step-label">STEP 1 OF 1</span>
+        </div>
+
+        <form id="onboardingForm" method="POST" action="/submit">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="full_name">Full Name *</label>
+                    <input type="text" id="full_name" name="full_name"
+                           placeholder="Enter full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth *</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="declared_age">Age *</label>
+                    <input type="number" id="declared_age" name="declared_age"
+                           min="18" max="120" placeholder="Enter age" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="national_id_ref">National ID Reference *</label>
+                    <input type="text" id="national_id_ref" name="national_id_ref"
+                           placeholder="e.g. SIM-ID-000001" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Mobile Number *</label>
+                    <input type="tel" id="phone" name="phone"
+                           placeholder="+264811234567" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="occupation">Occupation *</label>
+                    <input type="text" id="occupation" name="occupation"
+                           placeholder="Enter occupation">
+                </div>
+
+                <div class="form-group">
+                    <label for="monthly_income">Monthly Income (NAD) *</label>
+                    <input type="number" id="monthly_income" name="monthly_income"
+                           min="0" step="0.01" placeholder="e.g. 12500" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="onboarding_channel">Onboarding Channel *</label>
+                    <select id="onboarding_channel" name="onboarding_channel" required>
+                        <option value="">Select channel</option>
+                        <option value="Digital">Digital Self-Service</option>
+                        <option value="Assisted">Staff-Assisted</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="address">Residential Address *</label>
+                    <textarea id="address" name="address" rows="3"
+                              placeholder="Enter residential address" required></textarea>
+                </div>
+
+            </div>
+
+            <div class="privacy-notice">
+                <strong>Privacy Notice</strong>
+                <p>
+                    This is a research prototype. Please use fictional information
+                    only. Do not enter actual personal banking or identification details.
+                </p>
+            </div>
+
+            <button type="submit" id="submitButton">
+                Submit Application
+                <span>→</span>
+            </button>
+
+        </form>
+
+    </section>
+
+    <footer>
+        <p>BankSecure Research Prototype | Customer Data Quality Assessment</p>
+        <p>Demonstration environment — not a live banking service.</p>
+    </footer>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/behaviour.js') }}"></script>
+
+</body>
+</html>
