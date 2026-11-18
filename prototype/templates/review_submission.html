@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DataQ | Submission Review</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            color: #263247;
+        }
+
+        header {
+            background: #172b4d;
+            color: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1050px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            margin-bottom: 8px;
+        }
+
+        .page-heading p {
+            color: #64748b;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .panel h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #172b4d;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .detail {
+            border-bottom: 1px solid #e8edf3;
+            padding-bottom: 12px;
+        }
+
+        .detail-label {
+            display: block;
+            color: #718096;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .score {
+            background: #f4f7fb;
+            padding: 17px;
+            border-radius: 8px;
+        }
+
+        .score span {
+            display: block;
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .score strong {
+            font-size: 22px;
+            color: #172b4d;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin: 18px 0 8px;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #1763a6;
+            color: white;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #104d85;
+        }
+
+        .notice {
+            background: #eff6ff;
+            border-left: 4px solid #1763a6;
+            padding: 13px;
+            color: #334155;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            color: #718096;
+            font-size: 12px;
+            padding: 25px;
+        }
+
+        @media (max-width: 650px) {
+            .details-grid,
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>DataQ</h1>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</header>
+
+<main>
+
+    <div class="page-heading">
+        <h2>Submission Review</h2>
+        <p>Review the data quality assessment and record a staff decision.</p>
+    </div>
+
+    <div class="panel">
+
+        <h3>Submission Information</h3>
+
+        <div class="details-grid">
+
+            <div class="detail">
+                <span class="detail-label">Submission Reference</span>
+                <span class="detail-value">
+                    {{ submission.submission_reference }}
+                </span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Customer Number</span>
+                <span class="detail-value">
+                    {{ submission.customer.customer_number }}
+                </span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Customer Name</span>
+                <span class="detail-value">
+                    {{ submission.customer.full_name or "Not provided" }}
+                </span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Onboarding Channel</span>
+                <span class="detail-value">
+                    {{ submission.onboarding_channel or "Not specified" }}
+                </span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Submission Date</span>
+                <span class="detail-value">
+                    {{ submission_time.strftime('%d %b %Y, %H:%M') if submission_time else "Not available" }}
+                </span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Current Workflow Status</span>
+                <span class="detail-value">
+                    {{ submission.workflow_status }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <h3>Data Quality Assessment</h3>
+
+        <div class="score-grid">
+
+            <div class="score">
+                <span>Completeness</span>
+                <strong>{{ submission.completeness }}%</strong>
+            </div>
+
+            <div class="score">
+                <span>Accuracy</span>
+                <strong>{{ submission.accuracy }}%</strong>
+            </div>
+
+            <div class="score">
+                <span>Consistency</span>
+                <strong>{{ submission.consistency }}%</strong>
+            </div>
+
+            <div class="score">
+                <span>Timeliness</span>
+                <strong>{{ submission.timeliness }}%</strong>
+            </div>
+
+            <div class="score">
+                <span>Validity</span>
+                <strong>{{ submission.validity }}%</strong>
+            </div>
+
+            <div class="score">
+                <span>Composite Quality Score</span>
+                <strong>{{ submission.composite_score }}%</strong>
+            </div>
+
+        </div>
+
+        <div class="details-grid" style="margin-top: 22px;">
+
+            <div class="detail">
+                <span class="detail-label">Quality Review Flag</span>
+                <span class="detail-value">{{ submission.review_flag }}</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Uniqueness Status</span>
+                <span class="detail-value">{{ submission.uniqueness_status }}</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Model Prediction</span>
+                <span class="detail-value">{{ submission.model_prediction }}</span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label">Prediction Probability</span>
+                <span class="detail-value">
+                    {{ "%.2f"|format(submission.prediction_probability) }}%
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <h3>Staff Review Decision</h3>
+
+        <div class="notice">
+            Record your assessment after reviewing the submission.
+            Your decision and comments will be saved against this submission.
+        </div>
+
+        <form method="POST">
+
+            <label for="decision">Review Decision</label>
+
+            <select id="decision" name="decision" required>
+
+                <option value="">Select a decision</option>
+
+                <option value="Accepted"
+                    {% if submission.staff_review and submission.staff_review.decision == "Accepted" %}selected{% endif %}>
+                    Accepted
+                </option>
+
+                <option value="Requires Correction"
+                    {% if submission.staff_review and submission.staff_review.decision == "Requires Correction" %}selected{% endif %}>
+                    Requires Correction
+                </option>
+
+                <option value="Rejected"
+                    {% if submission.staff_review and submission.staff_review.decision == "Rejected" %}selected{% endif %}>
+                    Rejected
+                </option>
+
+            </select>
+
+            <label for="comments">Review Comments</label>
+
+            <textarea
+                id="comments"
+                name="comments"
+                placeholder="Enter your review observations and reasons for the decision..."
+            >{{ submission.staff_review.comments if submission.staff_review else "" }}</textarea>
+
+            <button type="submit">
+                Save Review Decision
+            </button>
+
+        </form>
+
+    </div>
+
+</main>
+
+<footer>
+    DataQ | Honours Research Prototype | 2026
+</footer>
+
+</body>
+</html>

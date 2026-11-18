@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Quality Dashboard | BankSecure</title>
+    <title>DataQ | Customer Onboarding Data Quality Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
@@ -12,10 +12,10 @@
 
 <header class="topbar">
     <div class="brand">
-        <div class="brand-icon">B</div>
+        <div class="brand-icon">D</div>
         <div>
-            <h2>BankSecure</h2>
-            <span>Data Quality Monitoring Dashboard</span>
+            <h2>DataQ</h2>
+            <span>Predictive Data Quality Assessment</span>
         </div>
     </div>
 
@@ -150,8 +150,86 @@
 
     </section>
 
+
+    <section class="form-card" style="margin-top:25px;">
+
+        <div class="form-heading">
+            <div>
+                <h2>Submission History</h2>
+                <p>View and review previously submitted onboarding records.</p>
+            </div>
+        </div>
+
+        {% if submissions %}
+
+        <div style="overflow-x:auto;">
+
+            <table style="width:100%; border-collapse:collapse; text-align:left;">
+
+                <thead>
+                    <tr style="border-bottom:2px solid #e8edf2;">
+                        <th style="padding:12px;">Submission Reference</th>
+                        <th style="padding:12px;">Customer Number</th>
+                        <th style="padding:12px;">Quality Score</th>
+                        <th style="padding:12px;">Model Prediction</th>
+                        <th style="padding:12px;">Workflow Status</th>
+                        <th style="padding:12px;">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for submission in submissions %}
+
+                    <tr style="border-bottom:1px solid #e8edf2;">
+
+                        <td style="padding:12px;">
+                            {{ submission.submission_reference }}
+                        </td>
+
+                        <td style="padding:12px;">
+                            {{ submission.customer.customer_number }}
+                        </td>
+
+                        <td style="padding:12px;">
+                            {{ submission.composite_score }}%
+                        </td>
+
+                        <td style="padding:12px;">
+                            {{ submission.model_prediction }}
+                        </td>
+
+                        <td style="padding:12px;">
+                            {{ submission.workflow_status }}
+                        </td>
+
+                        <td style="padding:12px;">
+                            <a href="{{ url_for('review_submission', submission_id=submission.id) }}">
+                                Review
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <p>No submissions have been recorded yet.</p>
+
+        {% endif %}
+
+    </section>
+
+
     <footer>
-        <p>BankSecure Research Prototype | Customer Data Quality Assessment</p>
+        <p>DataQ | Honours Research Prototype | 2026</p>
         <p>Restricted staff demonstration environment.</p>
     </footer>
 

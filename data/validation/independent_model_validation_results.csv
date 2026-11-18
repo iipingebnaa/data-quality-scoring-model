@@ -1,0 +1,4 @@
+Model,Dataset,Accuracy,Precision,Recall,F1_Score,ROC_AUC,True_Negatives,False_Positives,False_Negatives,True_Positives
+Random Forest,Onboarding,1.0,1.0,1.0,1.0,1.0,600,0,0,400
+Random Forest,Behaviour,0.665,0.6006191950464397,0.485,0.5366528354080221,0.7014145833333334,471,129,206,194
+Random Forest,Combined,0.999,0.9975062344139651,1.0,0.9987515605493134,1.0,599,1,0,400
